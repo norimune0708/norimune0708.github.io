@@ -1,299 +1,63 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BEST OF YOUR P</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>你最好的平P</title>
   <style>
     body {
-      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background-color: #fafafa;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 15px;
-    }
-
-    .item {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      cursor: pointer;
-      border: 2px solid transparent;
-      border-radius: 12px;
-      transition: all 0.2s;
-      background-color: white;
-      width: 40%;
-      max-width: 200px;
-      padding: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
     }
 
-    .item:hover {
-      border-color: #0078d7;
-      background-color: #eef6ff;
+    h1 {
+      margin-bottom: 40px;
+      text-align: center;
     }
 
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    button {
-      padding: 10px 16px;
-      margin: 6px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      background-color: #0078d7;
-      color: white;
-      font-size: 1rem;
-      transition: background-color 0.2s;
-    }
-
-    button:hover {
-      background-color: #005fa3;
-    }
-
-/* 让平局按钮和上一步按钮在同一行，移动端自适应 */
-   #tie, #back {
-     width: 45%;        /* 两个按钮宽度约为父容器的45%，留间隙 */
-     display: inline-block;
-     margin: 5px 2.5%;  /* 水平间距 */
-    }
-
-    @media (max-width: 600px) {
-     #tie, #back {
-       width: 80%;       /* 手机屏幕上按钮变宽，堆叠显示 */
-       margin: 5px auto;
-     }
-    }
-
-
-    #result {
-      margin-top: 30px;
-      font-size: 1rem;
-    }
-
-    ol {
-      display: inline-block;
-      text-align: left;
-      padding-left: 20px;
-    }
-
-   /* 排行榜块状显示：图片100x100 + 文字并排 */
-    #rank-list div {
+    .nav-container {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-start; /* 左对齐 */
+      flex-direction: column;
+      gap: 20px;
+      width: 80%;
+      max-width: 400px;
     }
 
-    #rank-list img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
+    .nav-item {
+      display: block;
+      text-decoration: none;
+      background-color: #3498db;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+      transition: background-color 0.3s;
     }
 
+    .nav-item:hover {
+      background-color: #2980b9;
+    }
 
     @media (max-width: 600px) {
-      .item {
-        width: 80%;
-      }
-      h1 {
-        font-size: 1.4rem;
+      .nav-item {
+        font-size: 1.2rem;
+        padding: 15px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>你最好的皮毛豆</h1>
-
-  <div id="compare" class="container"></div>
-  <div>
-    <button id="tie">一样喜欢</button>
-    <button id="back">上一题</button>
+  <h1>排行入口</h1>
+  <div class="nav-container">
+    <a class="nav-item" href="BoHR.html">平沢進SOLO(不含核P)</a>
+    <a class="nav-item" href="BoPM.html">P-MODEL</a>
   </div>
-
-  <div id="result"></div>
-  <button id="save" style="display:none;">保存排行榜为图片</button>
-
-  <!-- 引入 html2canvas 用于截图 -->
-  <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.9.0/dist/dom-to-image-more.min.js"></script>
-
-  <script>
-    /************************************************
-     * 【1】定义选项
-     ************************************************/
-    const items = [
-      { name: "IN A MODEL ROOM", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/01_in-a-model-room_s.jpg" },
-      { name: "LANDSALE", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/02_landsale_s.jpg" },
-      { name: "Potpourri", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/03_potpourri_s.jpg" },
-      { name: "Perspective", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/04_perspective_s.jpg" },
-      { name: "ANOTHER GAME", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/05_another-game_s.jpg" },
-      { name: "KARKADOR", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/06_karkador_s.jpg" },
-      { name: "ONE PATTERN", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/07_one-pattern_s.jpg" },
-      { name: "P-MODEL", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/08_p-model_s.jpg" },
-      { name: "big body", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/09_big-body_s.jpg" },
-      { name: "舟", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/10_fune_s.jpg"  },
-      { name: "電子悲劇/~ENOLA", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/11_enola_s.jpg"  },
-      { name: "音楽産業廃棄物 〜 P-MODEL OR DIE", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/12_p-model-or-die_s.jpg"  }
-
-    ];
-
-    /************************************************
-     * 【2】两两对比逻辑
-     ************************************************/
-     let history = []; // 每一步操作记录
-
-     let pairs = [];
-    for (let i = 0; i < items.length; i++) {
-      for (let j = i + 1; j < items.length; j++) {
-        pairs.push([i, j]);
-      }
-    }
-
-    let scores = Array(items.length).fill(0);
-    let currentIndex = 0;
-    const container = document.getElementById("compare");
-    const resultDiv = document.getElementById("result");
-    const tieBtn = document.getElementById("tie");
-    const saveBtn = document.getElementById("save");
-
-    function showPair() {
-      if (currentIndex >= pairs.length) {
-        showResult();
-        return;
-      }
-      const [a, b] = pairs[currentIndex];
-      container.innerHTML = `
-        <div class="item" onclick="choose(${a}, ${b})">
-          <img src="${items[a].img}" alt="${items[a].name}">
-          <div>${items[a].name}</div>
-        </div>
-        <div class="item" onclick="choose(${b}, ${a})">
-          <img src="${items[b].img}" alt="${items[b].name}">
-          <div>${items[b].name}</div>
-        </div>
-      `;
-    }
-
-    function choose(winner, loser) {
-       scores[winner]++;
-       history.push({ a: pairs[currentIndex][0], b: pairs[currentIndex][1], type: 'win', winner, loser });
-    nextPair();
-}
-
-   tieBtn.addEventListener("click", () => {
-      const [a, b] = pairs[currentIndex];
-      scores[a] += 0.5;
-      scores[b] += 0.5;
-      history.push({ a, b, type: 'tie' });
-      nextPair();
-    });
-
-    const backBtn = document.getElementById("back");
-
-   backBtn.addEventListener("click", () => {
-      if (history.length === 0) return; // 没有操作可撤回
-        currentIndex--;
-        const last = history.pop();
-  
-      if (last.type === 'win') {
-        scores[last.winner]--;
-    } else if (last.type === 'tie') {
-        scores[last.a] -= 0.5;
-        scores[last.b] -= 0.5;
-        }
-
-  showPair(); // 重新显示上一对
-});
-
-
-    function nextPair() {
-      currentIndex++;
-      showPair();
-    }
-
-    function showResult() {
-      const ranked = items
-        .map((item, i) => ({ ...item, score: scores[i] }))
-        .sort((a, b) => b.score - a.score);
-
-  container.innerHTML = "";
-  tieBtn.style.display = "none";
-  backBtn.style.display = "none";
-  saveBtn.style.display = "inline-block";
-
-  let html = "<h2>最终排行榜</h2><div style='display:flex;flex-direction:column;gap:8px;' id='rank-list'>";
-
-  let lastScore = null;
-  let lastRank = 0;
-  let sameRankCount = 0;
-
-  ranked.forEach((r, index) => {
-    if (r.score === lastScore) {
-      sameRankCount++;
-    } else {
-      lastRank += 1 + sameRankCount;
-      sameRankCount = 0;
-    }
-    lastScore = r.score;
-
-    html += `
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:30px;"><b>${lastRank}</b></div>
-        <img src="${r.img}" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-        <div>${r.name}</div>
-      </div>`;
-  });
-
-  html += "</div>";
-  resultDiv.innerHTML = html;
-}
-
-
-    // 截图保存
-    saveBtn.addEventListener("click", () => {
-      const element = document.getElementById("result");
-  // 延迟50ms确保DOM渲染完成
-      setTimeout(() => {
-        domtoimage.toPng(element)
-        .then(function (dataUrl) {
-         const link = document.createElement("a");
-         link.download = "ranking.png";
-         link.href = dataUrl;
-         link.click();
-      })
-       .catch(function (error) {
-         console.error('保存失败:', error);
-      });
-   },  50);
-});
-
-
-
-
-    window.addEventListener("DOMContentLoaded", () => {
-        showPair(); // 页面加载完成后显示第一对
-    });
-  </script>
 </body>
 </html>
-
