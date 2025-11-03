@@ -6,58 +6,111 @@
   <title>你最好的平P</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
     }
 
     h1 {
-      margin-bottom: 40px;
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
       text-align: center;
+      letter-spacing: 2px;
     }
 
     .nav-container {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 80%;
-      max-width: 400px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      max-width: 500px;
+      padding: 0 1rem;
     }
 
     .nav-item {
-      display: block;
+      position: relative;
+      width: 440px;
+      height: 240px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
       text-decoration: none;
-      background-color: #3498db;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(55%);
+      transition: transform 0.4s ease, filter 0.3s ease;
+    }
+
+    .nav-item:hover::before {
+      transform: scale(1.1);
+      filter: brightness(45%);
+    }
+
+    .nav-text {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
       text-align: center;
-      font-size: 1.5rem;
-      transition: background-color 0.3s;
+      font-size: 1.2rem;
+      padding: 0.8rem 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-weight: 500;
     }
 
-    .nav-item:hover {
-      background-color: #2980b9;
+    #hirasawa::before {
+      background-image: url("https://susumuhirasawa.com/images/page-title/title-discography-hirasawa.jpg");
     }
 
-    @media (max-width: 600px) {
-      .nav-item {
-        font-size: 1.2rem;
-        padding: 15px;
-      }
+    #pmodel::before {
+      background-image: url("https://susumuhirasawa.com/images/page-title/title-discography-pmodel.jpg");
+    }
+
+   @media (max-width: 600px) {
+  .nav-container {
+    flex-direction: column;   
+    align-items: center;    
+  }
+
+  .nav-item {
+    width: 80%;            
+    height: 110px;
+  }
+
+  .nav-text {
+    font-size: 1rem;
+    padding: 0.6rem 0;
+  }
     }
   </style>
 </head>
 <body>
-  <h1>排行入口</h1>
+  <h1>你最好的平P</h1>
+
   <div class="nav-container">
-    <a class="nav-item" href="BoHR.html">平沢進SOLO(不含核P)</a>
-    <a class="nav-item" href="BoPM.html">P-MODEL</a>
+    <a href="BoHR.html" class="nav-item" id="hirasawa">
+      <div class="nav-text">平沢進solo</div>
+    </a>
+
+    <a href="BoPM.html" class="nav-item" id="pmodel">
+      <div class="nav-text">P-MODEL</div>
+    </a>
   </div>
 </body>
 </html>
