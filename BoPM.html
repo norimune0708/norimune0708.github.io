@@ -29,6 +29,34 @@
       margin-bottom: 15px;
     }
 
+  #loading-screen {
+    position: fixed;
+    inset: 0;
+    background-color: black; /* 黑色背景 */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #555;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
     .item {
       display: flex;
       flex-direction: column;
@@ -139,6 +167,11 @@
 <body>
   <h1>你最好的皮毛豆</h1>
 
+  <div id="loading-screen">
+    <div class="spinner"></div>
+    <p>被主唱殴打中...</p>
+  </div>
+
   <div id="compare" class="container"></div>
   <div>
     <button id="tie">一样喜欢</button>
@@ -191,11 +224,11 @@
       const [a, b] = pairs[currentIndex];
       container.innerHTML = `
         <div class="item" onclick="choose(${a}, ${b})">
-          <img src="${items[a].img}" alt="${items[a].name}">
+          <img src="${items[a].img}" alt="${items[a].name}" loading="lazy" >
           <div>${items[a].name}</div>
         </div>
         <div class="item" onclick="choose(${b}, ${a})">
-          <img src="${items[b].img}" alt="${items[b].name}">
+          <img src="${items[b].img}" alt="${items[b].name}" loading="lazy">
           <div>${items[b].name}</div>
         </div>
       `;
@@ -285,5 +318,13 @@
 
     window.addEventListener("DOMContentLoaded", showPair);
   </script>
+
+  <script>
+  window.addEventListener("load", () => {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+  });
+</script>
+
 </body>
 </html>
