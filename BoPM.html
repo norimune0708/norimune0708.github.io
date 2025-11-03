@@ -7,7 +7,8 @@
   <style>
     body {
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background-color: #fafafa;
+      background-color: #000;
+      color: #fff;
       text-align: center;
       padding: 20px;
       margin: 0;
@@ -16,6 +17,7 @@
     h1 {
       font-size: 1.6rem;
       margin-bottom: 20px;
+      color: #fff;
     }
 
     .container {
@@ -34,17 +36,18 @@
       cursor: pointer;
       border: 2px solid transparent;
       border-radius: 12px;
-      transition: all 0.2s;
-      background-color: white;
+      transition: all 0.25s ease;
+      background-color: #111;
       width: 40%;
       max-width: 200px;
       padding: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(255,255,255,0.1);
     }
 
     .item:hover {
-      border-color: #0078d7;
-      background-color: #eef6ff;
+      border-color: #00aaff;
+      transform: scale(1.03);
+      box-shadow: 0 4px 10px rgba(0,170,255,0.3);
     }
 
     img {
@@ -60,46 +63,60 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background-color: #0078d7;
-      color: white;
       font-size: 1rem;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, transform 0.2s;
     }
 
     button:hover {
+      transform: scale(1.05);
+    }
+
+    #tie {
+      background-color: #02b40b;
+      color: white;
+    }
+
+    #tie:hover {
+      background-color: #029909;
+    }
+
+    #back {
+      background-color: #0078d7;
+      color: white;
+    }
+
+    #back:hover {
       background-color: #005fa3;
     }
 
-   #tie, #back {
-     width: 45%;        
-     display: inline-block;
-     margin: 5px 2.5%;  
+    #tie, #back {
+      width: 45%;
+      display: inline-block;
+      margin: 5px 2.5%;
     }
 
     @media (max-width: 600px) {
-     #tie, #back {
-       width: 80%;      
-       margin: 5px auto;
-     }
+      #tie, #back {
+        width: 80%;
+        margin: 5px auto;
+        display: block;
+      }
     }
-
 
     #result {
       margin-top: 30px;
       font-size: 1rem;
     }
 
-    ol {
-      display: inline-block;
-      text-align: left;
-      padding-left: 20px;
-    }
-
     #rank-list div {
       display: flex;
       align-items: center;
       gap: 10px;
-      justify-content: flex-start; 
+      justify-content: flex-start;
+      background-color: #111;
+      padding: 8px 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(255,255,255,0.1);
     }
 
     #rank-list img {
@@ -108,7 +125,6 @@
       object-fit: cover;
       border-radius: 8px;
     }
-
 
     @media (max-width: 600px) {
       .item {
@@ -125,17 +141,16 @@
 
   <div id="compare" class="container"></div>
   <div>
-    <button id="tie" style="background-color:#02b40b;color:white;">一样喜欢</button>
+    <button id="tie">一样喜欢</button>
     <button id="back">上一题</button>
   </div>
 
   <div id="result"></div>
-  <button id="save" style="display:none;">保存排行榜为图片</button>
+  <button id="save" style="display:none;background-color:#444;color:#fff;">保存排行榜为图片</button>
 
   <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.9.0/dist/dom-to-image-more.min.js"></script>
 
   <script>
-  
     const items = [
       { name: "IN A MODEL ROOM", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/01_in-a-model-room_s.jpg" },
       { name: "LANDSALE", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/02_landsale_s.jpg" },
@@ -150,11 +165,10 @@
       { name: "電子悲劇/~ENOLA", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/11_enola_s.jpg"  },
       { name: "音楽産業廃棄物 〜 P-MODEL OR DIE", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/p-model/album/images/12_p-model-or-die_s.jpg"  }
 
-    ];
+     ]
 
-     let history = []; 
-
-     let pairs = [];
+    let history = [];
+    let pairs = [];
     for (let i = 0; i < items.length; i++) {
       for (let j = i + 1; j < items.length; j++) {
         pairs.push([i, j]);
@@ -167,6 +181,7 @@
     const resultDiv = document.getElementById("result");
     const tieBtn = document.getElementById("tie");
     const saveBtn = document.getElementById("save");
+    const backBtn = document.getElementById("back");
 
     function showPair() {
       if (currentIndex >= pairs.length) {
@@ -187,12 +202,12 @@
     }
 
     function choose(winner, loser) {
-       scores[winner]++;
-       history.push({ a: pairs[currentIndex][0], b: pairs[currentIndex][1], type: 'win', winner, loser });
-    nextPair();
-}
+      scores[winner]++;
+      history.push({ a: pairs[currentIndex][0], b: pairs[currentIndex][1], type: 'win', winner, loser });
+      nextPair();
+    }
 
-   tieBtn.addEventListener("click", () => {
+    tieBtn.addEventListener("click", () => {
       const [a, b] = pairs[currentIndex];
       scores[a] += 0.5;
       scores[b] += 0.5;
@@ -200,23 +215,18 @@
       nextPair();
     });
 
-    const backBtn = document.getElementById("back");
-
-   backBtn.addEventListener("click", () => {
-      if (history.length === 0) return; 
-        currentIndex--;
-        const last = history.pop();
-  
+    backBtn.addEventListener("click", () => {
+      if (history.length === 0) return;
+      currentIndex--;
+      const last = history.pop();
       if (last.type === 'win') {
         scores[last.winner]--;
-    } else if (last.type === 'tie') {
+      } else if (last.type === 'tie') {
         scores[last.a] -= 0.5;
         scores[last.b] -= 0.5;
-        }
-
-  showPair(); // 重新显示上一对
-});
-
+      }
+      showPair();
+    });
 
     function nextPair() {
       currentIndex++;
@@ -224,67 +234,56 @@
     }
 
     function showResult() {
-      const ranked = items
-        .map((item, i) => ({ ...item, score: scores[i] }))
-        .sort((a, b) => b.score - a.score);
+      const ranked = items.map((item, i) => ({ ...item, score: scores[i] })).sort((a, b) => b.score - a.score);
+      container.innerHTML = "";
+      tieBtn.style.display = "none";
+      backBtn.style.display = "none";
+      saveBtn.style.display = "inline-block";
 
-  container.innerHTML = "";
-  tieBtn.style.display = "none";
-  backBtn.style.display = "none";
-  saveBtn.style.display = "inline-block";
+      let html = "<h2>最终排行榜</h2><div style='display:flex;flex-direction:column;gap:8px;' id='rank-list'>";
 
-  let html = "<h2>最终排行榜</h2><div style='display:flex;flex-direction:column;gap:8px;' id='rank-list'>";
+      let lastScore = null;
+      let lastRank = 0;
+      let sameRankCount = 0;
 
-  let lastScore = null;
-  let lastRank = 0;
-  let sameRankCount = 0;
+      ranked.forEach((r, index) => {
+        if (r.score === lastScore) {
+          sameRankCount++;
+        } else {
+          lastRank += 1 + sameRankCount;
+          sameRankCount = 0;
+        }
+        lastScore = r.score;
 
-  ranked.forEach((r, index) => {
-    if (r.score === lastScore) {
-      sameRankCount++;
-    } else {
-      lastRank += 1 + sameRankCount;
-      sameRankCount = 0;
+        html += `
+          <div>
+            <div style="width:30px;"><b>${lastRank}</b></div>
+            <img src="${r.img}">
+            <div>${r.name}</div>
+          </div>`;
+      });
+
+      html += "</div>";
+      resultDiv.innerHTML = html;
     }
-    lastScore = r.score;
 
-    html += `
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:30px;"><b>${lastRank}</b></div>
-        <img src="${r.img}" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-        <div>${r.name}</div>
-      </div>`;
-  });
-
-  html += "</div>";
-  resultDiv.innerHTML = html;
-}
-
-
-    // 截图保存
     saveBtn.addEventListener("click", () => {
       const element = document.getElementById("result");
-  // 延迟50ms确保DOM渲染完成
       setTimeout(() => {
         domtoimage.toPng(element)
-        .then(function (dataUrl) {
-         const link = document.createElement("a");
-         link.download = "ranking.png";
-         link.href = dataUrl;
-         link.click();
-      })
-       .catch(function (error) {
-         console.error('保存失败:', error);
-      });
-   },  50);
-});
-
-
-    window.addEventListener("DOMContentLoaded", () => {
-        showPair(); // 页面加载完成后显示第一对
+          .then(function (dataUrl) {
+            const link = document.createElement("a");
+            link.download = "ranking.png";
+            link.href = dataUrl;
+            link.click();
+          })
+          .catch(function (error) {
+            console.error('保存失败:', error);
+          });
+      }, 50);
     });
+
+    window.addEventListener("DOMContentLoaded", showPair);
   </script>
 </body>
 </html>
-
-
