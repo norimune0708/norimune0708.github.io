@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BEST OF YOUR P</title>
+  <title>BEST OF YOUR HIRASAWA</title>
   <style>
     body {
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -70,16 +70,15 @@
       background-color: #005fa3;
     }
 
-/* 让平局按钮和上一步按钮在同一行，移动端自适应 */
    #tie, #back {
-     width: 45%;        /* 两个按钮宽度约为父容器的45%，留间隙 */
+     width: 45%;        
      display: inline-block;
-     margin: 5px 2.5%;  /* 水平间距 */
+     margin: 5px 2.5%;  
     }
 
     @media (max-width: 600px) {
      #tie, #back {
-       width: 80%;       /* 手机屏幕上按钮变宽，堆叠显示 */
+       width: 80%;       
        margin: 5px auto;
      }
     }
@@ -96,12 +95,11 @@
       padding-left: 20px;
     }
 
-   /* 排行榜块状显示：图片100x100 + 文字并排 */
     #rank-list div {
       display: flex;
       align-items: center;
       gap: 10px;
-      justify-content: flex-start; /* 左对齐 */
+      justify-content: flex-start; 
     }
 
     #rank-list img {
@@ -134,13 +132,10 @@
   <div id="result"></div>
   <button id="save" style="display:none;">保存排行榜为图片</button>
 
-  <!-- 引入 html2canvas 用于截图 -->
   <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.9.0/dist/dom-to-image-more.min.js"></script>
 
   <script>
-    /************************************************
-     * 【1】定义选项
-     ************************************************/
+  
     const items = [
       { name: "時空の水", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/hirasawa/album/images/01_water-in-time-and-space_s.jpg" },
       { name: "サイエンスの幽霊", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/hirasawa/album/images/02_the-ghost-in-scince_s.jpg" },
@@ -157,10 +152,8 @@
       { name: "ホログラムを登る男", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/hirasawa/album/images/13_the-man-climbing-the-hologram_s.jpg"  },
       { name: "BEACON", img: "https://susumuhirasawa.com/cms/wp-content/uploads/2022/07/CHTE-0085.jpg"  },
      ]
-    /************************************************
-     * 【2】两两对比逻辑
-     ************************************************/
-     let history = []; // 每一步操作记录
+   
+     let history = []; 
 
      let pairs = [];
     for (let i = 0; i < items.length; i++) {
@@ -211,7 +204,7 @@
     const backBtn = document.getElementById("back");
 
    backBtn.addEventListener("click", () => {
-      if (history.length === 0) return; // 没有操作可撤回
+      if (history.length === 0) return; 
         currentIndex--;
         const last = history.pop();
   
@@ -296,3 +289,4 @@
   </script>
 </body>
 </html>
+
