@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -162,6 +163,10 @@
         font-size: 1.4rem;
       }
     }
+ 
+    #rank-list div {
+  box-shadow: none !important;
+}
   </style>
 </head>
 <body>
@@ -179,10 +184,7 @@
   </div>
 
   <div id="result"></div>
-  <button id="save" style="display:none;background-color:#444;color:#fff;">保存排行榜为图片</button>
-
-  <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.9.0/dist/dom-to-image-more.min.js"></script>
-
+ 
   <script>
     const items = [
       { name: "時空の水", img: "https://susumuhirasawa.com/cms/wp-content/themes/diva_tcd066/discograph/images/hirasawa/album/images/01_water-in-time-and-space_s.jpg" },
@@ -214,7 +216,6 @@
     const container = document.getElementById("compare");
     const resultDiv = document.getElementById("result");
     const tieBtn = document.getElementById("tie");
-    const saveBtn = document.getElementById("save");
     const backBtn = document.getElementById("back");
 
     function showPair() {
@@ -272,7 +273,6 @@
       container.innerHTML = "";
       tieBtn.style.display = "none";
       backBtn.style.display = "none";
-      saveBtn.style.display = "inline-block";
 
       let html = "<h2>最终排行榜</h2><div style='display:flex;flex-direction:column;gap:8px;' id='rank-list'>";
 
@@ -301,22 +301,6 @@
       resultDiv.innerHTML = html;
     }
 
-    saveBtn.addEventListener("click", () => {
-      const element = document.getElementById("result");
-      setTimeout(() => {
-        domtoimage.toPng(element)
-          .then(function (dataUrl) {
-            const link = document.createElement("a");
-            link.download = "ranking.png";
-            link.href = dataUrl;
-            link.click();
-          })
-          .catch(function (error) {
-            console.error('保存失败:', error);
-          });
-      }, 50);
-    });
-
     window.addEventListener("DOMContentLoaded", showPair);
   </script>
 
@@ -329,7 +313,5 @@
   
 </body>
 </html>
-
-
 
 
