@@ -181,9 +181,10 @@
   background-color: white;
   color: black;
 }
-/* ===== 篡改模式 ===== */
+/*了转反*/
+    
 body.glitch-mode {
-  background-image: url("https://shop.teslakite.com/images/sc1_cd/CHTE-0090.jpg"); /* ← 在这里填你想要的背景图 */
+  background-image: url("https://shop.teslakite.com/images/sc1_cd/CHTE-0090.jpg"); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -196,7 +197,6 @@ body.glitch-mode #rank-list div {
   color: black !important;
 }
 
-/* 返回按钮反转 */
 body.glitch-mode .back-home {
   color: black;
   border: 1px solid black;
@@ -207,14 +207,12 @@ body.glitch-mode .back-home:hover {
   color: white;
 }
 
-/* 仅篡改模式下排行块变为半透明白 */
 body.glitch-mode #rank-list div {
   background: rgba(255,255,255,0.3);
   padding: 8px;
   border-radius: 10px;
 }
 
-/* 故障动画 */
 @keyframes glitchFlash {
   0% { transform: translate(0); opacity:1; }
   20% { transform: translate(-3px, 2px); opacity:0.8; }
@@ -228,7 +226,6 @@ body.glitch-mode #rank-list div {
   animation: glitchFlash 0.2s infinite;
 }
 
-/* ===== CRT 横向撕裂 ===== */
 @keyframes crtTear {
   0% { transform: translateX(0); }
   20% { transform: translateX(-8px); }
@@ -242,7 +239,6 @@ body.glitch-mode #rank-list div {
   animation: crtTear 0.3s infinite;
 }
 
-/* unZIP 发光动画 */
 @keyframes unzipGlow {
   0% { 
     box-shadow: 0 0 0px rgba(255,255,255,0);
@@ -262,7 +258,6 @@ body.glitch-mode #rank-list div {
   animation: unzipGlow 1.5s forwards;
 }
 
-/* ===== 整行 RGB 分离 ===== */
 .rgb-row {
   position: relative;
 }
@@ -289,7 +284,6 @@ body.glitch-mode #rank-list div {
   filter: hue-rotate(180deg);
 }
 
-/* 滑动升到第一 */
 .slide-to-top {
   transition: transform 0.8s ease;
 }
@@ -428,7 +422,6 @@ function corruptNumbers() {
     lastScore = r.score;
   });
 
-  // ===== 找到 unZIP =====
   const unzipItem = ranked.find(r => r.name.includes("unZIP"));
 
   let glitchTriggered = false;
@@ -437,13 +430,11 @@ function corruptNumbers() {
     glitchTriggered = true;
   }
 
-  // ===== 如果触发篡改 =====
+
 if (glitchTriggered) {
 
-  // ① 先显示正常排名
   renderFinal(ranked, false);
 
-  // ② 1秒后开始轻微 glitch
   setTimeout(() => {
 
     resultDiv.classList.add("glitching");
@@ -451,14 +442,13 @@ if (glitchTriggered) {
     const unzipRow = document.getElementById("unzip-row");
     if (unzipRow) {
       unzipRow.classList.add("unzip-glowing");
-      unzipRow.classList.add("crt-tear"); // 撕裂开始
+      unzipRow.classList.add("crt-tear"); 
     }
 
-    corruptNumbers(); // 数字乱码
+    corruptNumbers(); 
 
   }, 1000);
 
-  // ③ 3秒后增强 glitch（RGB 抖动阶段）
   setTimeout(() => {
 
     resultDiv.classList.remove("glitching");
@@ -466,7 +456,6 @@ if (glitchTriggered) {
 
   }, 3000);
 
-  // ④ 4.5秒停止所有 glitch 动画
   setTimeout(() => {
 
     resultDiv.classList.remove("glitch-strong");
@@ -474,12 +463,11 @@ if (glitchTriggered) {
 
     const unzipRow = document.getElementById("unzip-row");
     if (unzipRow) {
-      unzipRow.classList.remove("crt-tear"); // 停止撕裂
+      unzipRow.classList.remove("crt-tear"); 
     }
 
 }, 4500);
 
-  // ⑤ 5秒后开始真正篡改
   setTimeout(() => {
 
     const unzipRow = document.getElementById("unzip-row");
@@ -498,7 +486,6 @@ if (glitchTriggered) {
       unzipRow.classList.add("slide-to-top");
       unzipRow.style.transform = `translateY(${distance}px)`;
 
-      // 1秒滑动
       setTimeout(() => {
 
         list.insertBefore(unzipRow, firstRow);
@@ -512,7 +499,6 @@ if (glitchTriggered) {
 
         updated.forEach((r, i) => r.rank = i + 1);
 
-        // ⚠️ 这里才真正进入篡改模式
         renderFinal(updated, true);
 
       }, 1000);
