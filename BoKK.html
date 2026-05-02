@@ -166,6 +166,21 @@
     #rank-list div {
   box-shadow: none !important;
 }
+.back-home {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+  transition: all 0.25s ease;
+}
+
+.back-home:hover {
+  background-color: white;
+  color: black;
+}
   </style>
 </head>
 <body>
@@ -287,7 +302,13 @@
           </div>`;
       });
 
-      html += "</div>";
+      html += `
+        </div>
+
+         <div style="margin-top:30px;text-align:center;">
+           <a href="index.html" class="back-home">回去尊重其它平P</a>
+       </div>
+      `;
       resultDiv.innerHTML = html;
     }
 
@@ -298,7 +319,6 @@
   <script>
   window.addEventListener("load", () => {
     document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("main-content").style.display = "block";
   });
 </script>
   
