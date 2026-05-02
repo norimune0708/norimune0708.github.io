@@ -163,7 +163,21 @@
         font-size: 1.4rem;
       }
     }
- 
+.back-home {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+  transition: all 0.25s ease;
+}
+
+.back-home:hover {
+  background-color: white;
+  color: black;
+}
     #rank-list div {
   box-shadow: none !important;
 }
@@ -274,8 +288,10 @@
       tieBtn.style.display = "none";
       backBtn.style.display = "none";
 
-      let html = "<h2>最终排行榜</h2><div style='display:flex;flex-direction:column;gap:8px;' id='rank-list'>";
-
+      let html = `
+        <h2>尊重度排行榜</h2>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="rank-list">
+`;
       let lastScore = null;
       let lastRank = 0;
       let sameRankCount = 0;
@@ -297,7 +313,13 @@
           </div>`;
       });
 
-      html += "</div>";
+      html += `
+        </div>
+
+        <div style="margin-top:30px;">
+          <a href="index.html" class="back-home">回去尊重其它平P</a>
+        </div>
+      `;
       resultDiv.innerHTML = html;
     }
 
@@ -307,7 +329,6 @@
   <script>
   window.addEventListener("load", () => {
     document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("main-content").style.display = "block";
   });
 </script>
   
