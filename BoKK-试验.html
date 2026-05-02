@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEST OF YOUR KAKU P-MODEL</title>
+  <style>
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+
+ #loading-screen {
+    position: fixed;
+    inset: 0;
+    background-color: black; 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #555;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+    
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+      background-color: #111;
+      width: 40%;
+      max-width: 200px;
+      padding: 8px;
+      box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+    }
+
+    .item:hover {
+      border-color: #00aaff;
+      transform: scale(1.03);
+      box-shadow: 0 4px 10px rgba(0,170,255,0.3);
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    button {
+      padding: 10px 16px;
+      margin: 6px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #tie {
+      background-color: #8d0404;
+      color: white;
+    }
+
+    #tie:hover {
+      background-color: #8d040460;
+    }
+
+    #back {
+      background-color: #36536bb0;
+      color: white;
+    }
+
+    #back:hover {
+      background-color: #233746b0;
+    }
+
+    #tie, #back {
+      width: 45%;
+      display: inline-block;
+      margin: 5px 2.5%;
+    }
+
+    @media (max-width: 600px) {
+      #tie, #back {
+        width: 80%;
+        margin: 5px auto;
+        display: block;
+      }
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1rem;
+    }
+
+    #rank-list div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+      background-color: #111;
+      padding: 8px 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+    }
+
+    #rank-list img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .item {
+        width: 80%;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+    #rank-list div {
+  box-shadow: none !important;
+}
+.back-home {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+  transition: all 0.25s ease;
+}
+
+.back-home:hover {
+  background-color: white;
+  color: black;
+}
+/* ===== 篡改模式 ===== */
+body.glitch-mode {
+  background-image: url("https://shop.teslakite.com/images/sc1_cd/CHTE-0090.jpg"); /* ← 在这里填你想要的背景图 */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: black !important;
+}
+
+body.glitch-mode h1,
+body.glitch-mode h2,
+body.glitch-mode #rank-list div {
+  color: black !important;
+}
+
+/* 返回按钮反转 */
+body.glitch-mode .back-home {
+  color: black;
+  border: 1px solid black;
+}
+
+body.glitch-mode .back-home:hover {
+  background-color: black;
+  color: white;
+}
+
+/* 仅篡改模式下排行块变为半透明白 */
+body.glitch-mode #rank-list div {
+  background: rgba(255,255,255,0.3);
+  padding: 8px;
+  border-radius: 10px;
+}
+
+/* 故障动画 */
+@keyframes glitchFlash {
+  0% { transform: translate(0); opacity:1; }
+  20% { transform: translate(-3px, 2px); opacity:0.8; }
+  40% { transform: translate(3px, -2px); opacity:0.6; }
+  60% { transform: translate(-2px, 1px); opacity:0.9; }
+  80% { transform: translate(2px, -1px); opacity:0.7; }
+  100% { transform: translate(0); opacity:1; }
+}
+
+.glitching {
+  animation: glitchFlash 0.2s infinite;
+}
+
+/* ===== CRT 横向撕裂 ===== */
+@keyframes crtTear {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+
+.crt-tear {
+  animation: crtTear 0.3s infinite;
+}
+
+/* unZIP 发光动画 */
+@keyframes unzipGlow {
+  0% { 
+    box-shadow: 0 0 0px rgba(255,255,255,0);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 10px rgba(255,255,255,0.6);
+    transform: scale(1.03);
+  }
+  100% { 
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+    transform: scale(1.05);
+  }
+}
+
+.unzip-glowing {
+  animation: unzipGlow 1.5s forwards;
+}
+
+/* ===== 整行 RGB 分离 ===== */
+.rgb-row {
+  position: relative;
+}
+
+.rgb-row::before,
+.rgb-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rgb-row::before {
+  background: inherit;
+  mix-blend-mode: screen;
+  transform: translate(-2px, 0);
+  filter: hue-rotate(0deg);
+}
+
+.rgb-row::after {
+  background: inherit;
+  mix-blend-mode: screen;
+  transform: translate(2px, 0);
+  filter: hue-rotate(180deg);
+}
+
+/* 滑动升到第一 */
+.slide-to-top {
+  transition: transform 0.8s ease;
+}
+  </style>
+</head>
+<body>
+  <h1>你最好的卡酷皮毛豆</h1>
+
+  <div id="loading-screen">
+    <div class="spinner"></div>
+    <p>起床中...</p>
+  </div>
+  
+  <div id="compare" class="container"></div>
+  <div>
+    <button id="tie">一样喜欢</button>
+    <button id="back">上一题</button>
+  </div>
+
+  <div id="result"></div>
+
+
+  <script>
+    const items = [
+      { name: "ビストロン", img: "https://shop.teslakite.com/images/large/sc1_cd/vistron_LRG.jpg" },
+      { name: "гипноза (Gipnoza) ", img: "https://shop.teslakite.com/images/sc1_cd/CHTE-0073.jpg" },
+      { name: "回=回", img: "https://shop.teslakite.com/images/large/sc1_cd/CHTE-0081_LRG.jpg" },
+      { name: "unZIP", img: "https://shop.teslakite.com/images/sc1_cd/CHTE-0090.jpg" },
+     ]
+
+    let history = [];
+    let pairs = [];
+    for (let i = 0; i < items.length; i++) {
+      for (let j = i + 1; j < items.length; j++) {
+        pairs.push([i, j]);
+      }
+    }
+
+    let scores = Array(items.length).fill(0);
+    let currentIndex = 0;
+    const container = document.getElementById("compare");
+    const resultDiv = document.getElementById("result");
+    const tieBtn = document.getElementById("tie");
+    const backBtn = document.getElementById("back");
+
+    function showPair() {
+      if (currentIndex >= pairs.length) {
+        showResult();
+        return;
+      }
+      const [a, b] = pairs[currentIndex];
+      container.innerHTML = `
+        <div class="item" onclick="choose(${a}, ${b})">
+          <img src="${items[a].img}" alt="${items[a].name}">
+          <div>${items[a].name}</div>
+        </div>
+        <div class="item" onclick="choose(${b}, ${a})">
+          <img src="${items[b].img}" alt="${items[b].name}">
+          <div>${items[b].name}</div>
+        </div>
+      `;
+    }
+
+    function choose(winner, loser) {
+      scores[winner]++;
+      history.push({ a: pairs[currentIndex][0], b: pairs[currentIndex][1], type: 'win', winner, loser });
+      nextPair();
+    }
+
+    tieBtn.addEventListener("click", () => {
+      const [a, b] = pairs[currentIndex];
+      scores[a] += 0.5;
+      scores[b] += 0.5;
+      history.push({ a, b, type: 'tie' });
+      nextPair();
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (history.length === 0) return;
+      currentIndex--;
+      const last = history.pop();
+      if (last.type === 'win') {
+        scores[last.winner]--;
+      } else if (last.type === 'tie') {
+        scores[last.a] -= 0.5;
+        scores[last.b] -= 0.5;
+      }
+      showPair();
+    });
+
+    function nextPair() {
+      currentIndex++;
+      showPair();
+    }
+
+    function showResult() {
+  const ranked = items
+    .map((item, i) => ({ ...item, score: scores[i] }))
+    .sort((a, b) => b.score - a.score);
+
+function corruptNumbers() {
+  const nums = document.querySelectorAll("#rank-list b");
+  nums.forEach(n => {
+    const original = n.innerText;
+    const glitchChars = ["#", "@", "%", "&", "?", "!", "∞", "∅"];
+
+    let i = 0;
+    const interval = setInterval(() => {
+      n.innerText = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+      i++;
+      if (i > 6) {
+        clearInterval(interval);
+        n.innerText = original;
+      }
+    }, 80);
+  });
+}
+
+  container.innerHTML = "";
+  tieBtn.style.display = "none";
+  backBtn.style.display = "none";
+
+  // ===== 计算正常排名 =====
+  let lastScore = null;
+  let lastRank = 0;
+  let sameRankCount = 0;
+
+  ranked.forEach((r) => {
+    if (r.score === lastScore) {
+      sameRankCount++;
+    } else {
+      lastRank += 1 + sameRankCount;
+      sameRankCount = 0;
+    }
+    r.rank = lastRank;
+    lastScore = r.score;
+  });
+
+  // ===== 找到 unZIP =====
+  const unzipItem = ranked.find(r => r.name.includes("unZIP"));
+
+  let glitchTriggered = false;
+
+  if (unzipItem && unzipItem.rank >= 3) {
+    glitchTriggered = true;
+  }
+
+  // ===== 如果触发篡改 =====
+if (glitchTriggered) {
+
+  // ① 先显示正常排名
+  renderFinal(ranked, false);
+
+  // ② 1秒后开始轻微 glitch
+  setTimeout(() => {
+
+    resultDiv.classList.add("glitching");
+
+    const unzipRow = document.getElementById("unzip-row");
+    if (unzipRow) {
+      unzipRow.classList.add("unzip-glowing");
+      unzipRow.classList.add("crt-tear"); // 撕裂开始
+    }
+
+    corruptNumbers(); // 数字乱码
+
+  }, 1000);
+
+  // ③ 3秒后增强 glitch（RGB 抖动阶段）
+  setTimeout(() => {
+
+    resultDiv.classList.remove("glitching");
+    resultDiv.classList.add("glitch-strong");
+
+  }, 3000);
+
+  // ④ 4.5秒停止所有 glitch 动画
+  setTimeout(() => {
+
+    resultDiv.classList.remove("glitch-strong");
+    resultDiv.classList.remove("glitching");
+
+    const unzipRow = document.getElementById("unzip-row");
+    if (unzipRow) {
+      unzipRow.classList.remove("crt-tear"); // 停止撕裂
+    }
+
+}, 4500);
+
+  // ⑤ 5秒后开始真正篡改
+  setTimeout(() => {
+
+    const unzipRow = document.getElementById("unzip-row");
+    const list = document.getElementById("rank-list");
+
+    if (unzipRow && list) {
+
+      const rows = Array.from(list.children);
+      const firstRow = rows[0];
+
+      const unzipRect = unzipRow.getBoundingClientRect();
+      const firstRect = firstRow.getBoundingClientRect();
+
+      const distance = firstRect.top - unzipRect.top;
+
+      unzipRow.classList.add("slide-to-top");
+      unzipRow.style.transform = `translateY(${distance}px)`;
+
+      // 1秒滑动
+      setTimeout(() => {
+
+        list.insertBefore(unzipRow, firstRow);
+        unzipRow.style.transform = "";
+        unzipRow.classList.remove("slide-to-top");
+
+        const updated = [
+          unzipItem,
+          ...ranked.filter(r => !r.name.includes("unZIP"))
+        ];
+
+        updated.forEach((r, i) => r.rank = i + 1);
+
+        // ⚠️ 这里才真正进入篡改模式
+        renderFinal(updated, true);
+
+      }, 1000);
+
+    }
+
+  }, 5000);
+
+} else {
+  renderFinal(ranked, false);
+}
+ 
+}
+function renderFinal(data, hacked) {
+
+  if (hacked) {
+    document.body.classList.add("glitch-mode");
+  }
+
+  let html = "<h2>你的尊重度排行榜</h2>";
+  html += "<div style='display:flex;flex-direction:column;gap:8px;' id='rank-list'>";
+
+  data.forEach((r) => {
+    const isUnzip = r.name.includes("unZIP");
+    html += `
+      <div ${isUnzip ? 'id="unzip-row" class="rgb-row"' : ''}>
+        <div style="width:30px;"><b>${r.rank}</b></div>
+        <img src="${r.img}">
+        <div ${isUnzip ? `class="rgb-split" data-text="${r.name}"` : ""}>
+          ${r.name}
+        </div>
+      </div>
+    `;
+  });
+
+  html += `
+    </div>
+    <div style="margin-top:30px;text-align:center;">
+      <a href="index.html" class="back-home">回去尊重其它平P</a>
+    </div>
+  `;
+
+  resultDiv.innerHTML = html;
+}
+    
+
+    
+    window.addEventListener("DOMContentLoaded", showPair);
+  </script>
+
+  <script>
+  window.addEventListener("load", () => {
+    document.getElementById("loading-screen").style.display = "none";
+  });
+</script>
+  
+</body>
+</html>
+
+
